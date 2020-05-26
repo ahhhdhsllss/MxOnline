@@ -19,7 +19,7 @@ Including another URLconf
 
 import xadmin
 
-from django.urls import path
+from django.urls import path, include
 
 from django.views.generic import TemplateView
 from users import views
@@ -29,4 +29,5 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'),name='index'),
     #path('login/', views.user_login, name='login'),  # 修改login路由
     path('login/',LoginView.as_view(),name = 'login'),
+    path('chart/',views.chart),
 ]

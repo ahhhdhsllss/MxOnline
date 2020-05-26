@@ -51,3 +51,6 @@ class LoginView(View):
         else:
             return render(request,'login.html',{'login_form':login_form})
 
+
+def chart(request):
+   return render(request, 'showlinediagram.html')
