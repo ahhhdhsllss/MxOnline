@@ -42,20 +42,29 @@
                         </li>
                         <li>
                             <h2>所在地区</h2>
-                            <div class="more">更多</div>
                             <div class="cont">
                                 <a href="?ct={{ category }}"><span
-                                        class="{% ifequal category '' %}active2{% endifequal %}">全部</span></a>
-                                {% for region in all_city %}
-                                    <a href="?region={{ region.id }}&ct={{ category }}"><span
-                                            class="{% ifequal category region.id|stringformat:"i" %}active2{% endifequal %}">{{ enterprise_id.industry }}</span></a>
-                                {% endfor %}
+                                        class="{% ifequal region '' %}active2{% endifequal %}">全部</span></a>
+{#                                <a href="?ct=湖南&region={{ region }}"><span#}
+{#                                        class="{% ifequal category '湖南' %}active2{% endifequal %}">湖南</span></a>#}
+{#                                <a href="?ct=山东&region={{ region }}"><span#}
+{#                                        class="{% ifequal category '山东' %}active2{% endifequal %}">山东</span></a>#}
+{#                                <a href="?ct=广东&region={{ region }}"><span#}
+{#                                        class="{% ifequal category '广东' %}active2{% endifequal %}">广东</span></a>#}
+{#                                <a href="?ct=广西&region={{ region }}"><span#}
+{#                                        class="{% ifequal category '广西' %}active2{% endifequal %}">广西</span></a>#}
+{#                                <a href="?ct=福建&region={{ region }}"><span#}
+{#                                        class="{% ifequal category '福建' %}active2{% endifequal %}">福建</span></a>#}
+{#                                <a href="?ct=湖北&region={{ region }}"><span#}
+{#                                        class="{% ifequal category '湖北' %}active2{% endifequal %}">湖北</span></a>#}
+{#                                <a href="?ct=江西&region={{ region }}"><span#}
+{#                                        class="{% ifequal category '江西' %}active2{% endifequal %}">江西/span></a>#}
                             </div>
                         </li>
                     </ul>
                 </div>
 
-                <div class="all">共<span class="key">{{ org_nums }}</span>家</div>
+                <div class="all">共<span class="key">{{ org_nums }}</span>条企业信息</div>
 
                 <div class="butler_list company list">
                     <div class="layout">
@@ -66,51 +75,33 @@
                                 <li class="{% if sort == 'students' %}active{% endif %}"><a
                                         href="?sort=type&ct={{ category }}&city={{ industry }}">企业类型 &#8595;</a></li>
                                 <li class="{% if sort == 'courses' %}active{% endif %}"><a
-                                        href="?sort=region&ct={{ category }}&city={{ industry }}">区域 &#8595;</a></li>
+                                        href="?sort=region&ct={{ category }}&city={{ region }}">区域 &#8595;</a></li>
                             </ul>
                         </div>
 
 
-                        {% for course_org in all_orgs.object_list %}
-                            <dl class="des difdes">
 
-                                <dt>
-                                    <a href="{% url 'enterprise:enter_home' course_org.enterprise_id %}">
+                            <div style="width: 200px">
+                            <table class="table table-hover table-striped">
+                                <tbody>
+                                <tr>
+                                    <th>企  业  ID</th>
+                                    <th>企 业 类 型</th>
+                                    <th>行      业</th>
+                                    <th>区      域</th>
+                                </tr>
+                                {% for all_orgs in all_orgs.object_list %}
+                                    <tr>
+                                        <th>{{ all_orgs.id }}</th>
+                                        <th>{{ all_orgs.type }}</th>
+                                        <th>{{ all_orgs.industry }}</th>
+                                        <th>{{ all_orgs.region }}</th>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            </div>
 
-{#                                        <img width="200" height="120" class="scrollLoading"#}
-{#                                             data-url="{{ MEDIA_URL }}{{ course_org.image }}"/>#}
-
-                                    </a>
-                                </dt>
-                                <dd>
-                                    <div class="clearfix">
-                                        <a href="enter-detail-homepage.html">
-                                            <h1>{{ course_org.enterprise_id }}</h1>
-                                            <div class="pic fl">
-
-{#                                                <img src="{% static 'images/authentication.png' %}"/>#}
-{##}
-{#                                                <img src="{% static 'images/gold.png' %}"/>#}
-
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <ul class="cont">
-                                        <li class="first"><p class="pic9">课程数：<span>1</span></p>
-                                            <p class="c7">学习人数：<span>1000</span></p></li>
-                                        <li class="c8" style="padding-left:18px;">北京市海淀区中关村北大街</li>
-                                        <li class="pic10" style="padding-left:18px;">经典课程：
-
-{#                                            <a href="/diary/19/">c语言基础入门</a>#}
-{##}
-{#                                            <a href="/diary/16/">数据库基础</a>#}
-
-                                        </li>
-                                    </ul>
-                                </dd>
-                                <div class="buy start_groupbuy jsShowPerfect2" data-id="22"><br/>联系<br/>服务</div>
-                            </dl>
-                        {% endfor %}
 
 
                     </div>

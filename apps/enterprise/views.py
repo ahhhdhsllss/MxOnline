@@ -3,8 +3,9 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from enterprise.models import Base, RegionDict
+from enterprise.models import Base
 from django.db.models import Q
+
 
 class EnterView(View):
     '''课程机构'''
@@ -14,7 +15,7 @@ class EnterView(View):
         all_orgs = Base.objects.all()
 
         # 所有金融报表
-        all_city = RegionDict.objects.all()
+        # all_city = RegionDict.objects.all()
 
         # 机构搜索功能
         search_keywords = request.GET.get('keywords', '')
@@ -51,12 +52,12 @@ class EnterView(View):
         except PageNotAnInteger:
             page = 1
         # 这里指从allorg中取五个出来，每页显示5个
-        p = Paginator(all_orgs, 2, request=request)
+        p = Paginator(all_orgs, 5, request=request)
         orgs = p.page(page)
 
         return render(request, "enter-list.html", {
             "all_orgs": orgs,
-            "all_citys": all_city,
+            # "enter": enter,
             "org_nums": org_nums,
             'industry':industry_id,
             "category": category,

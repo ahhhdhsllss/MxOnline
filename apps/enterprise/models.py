@@ -7,16 +7,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class RegionDict(models.Model):
-    name = models.CharField('城市',max_length=20)
-    # desc = models.CharField('描述',max_length=200)
-    # add_time = models.DateTimeField(default=datetime.now)
-
-    class Meta:
-        verbose_name = '城市'
-        verbose_name_plural= verbose_name
-
-
 
 class Base(models.Model):
 
@@ -25,13 +15,13 @@ class Base(models.Model):
         ('1','僵尸')
     )
 
-    enterprise_id = models.CharField('企业ID',max_length=50,default='')
+    # enterprise_id = models.CharField('企业ID',max_length=50,default='')
     register = models.CharField('注册时间',max_length=50, default='')
     flag = models.CharField('是否为僵尸企业',max_length=10,choices=flag_choices,default='NA')
     industry = models.CharField('行业',max_length=100,default='')
     registered_fund = models.CharField('注册资本',max_length=50,null=True,blank=True)
     # image = models.ImageField(upload_to='image/%Y%m',default='image/default.png',max_length=100)
-    region = models.ForeignKey(RegionDict, verbose_name='区域', on_delete=models.CASCADE)
+    region = models.CharField('区域', max_length=100, default='')
     type = models.CharField('企业类型', max_length=100, default='')
     controller_type = models.CharField('控制人类型', max_length=100, default='')
     controller_hold = models.CharField('控制人持股', max_length=100, default='')
@@ -59,7 +49,7 @@ class Knowledge(models.Model):
         ('1', '有著作权')
     )
 
-    enter_id = models.ForeignKey(Base, verbose_name='企业ID', on_delete=models.CASCADE)
+    enter = models.ForeignKey(Base, verbose_name='企业ID', on_delete=models.CASCADE)
     patent = models.CharField('专利', max_length=10, choices=patent_choices, default='NA')
     brand = models.CharField('商标', max_length=10, choices=brand_choices, default='NA')
     copyright = models.CharField('著作权', max_length=10, choices=copyright_choices, default='NA')
@@ -71,7 +61,7 @@ class Knowledge(models.Model):
 
 
 class Money_report(models.Model):
-    enter_id = models.ForeignKey(Base, verbose_name='企业ID', on_delete=models.CASCADE)
+    enter = models.ForeignKey(Base, verbose_name='企业ID', on_delete=models.CASCADE)
     year = models.CharField('year', max_length=50, default='')
     bond_limit = models.CharField('债权融资额度', max_length=100, default='')
     bond_cost = models.CharField('债权融资成本', max_length=100, default='')
@@ -87,7 +77,7 @@ class Money_report(models.Model):
 
 
 class Year_report(models.Model):
-    enter_id = models.ForeignKey(Base, verbose_name='企业ID', on_delete=models.CASCADE)
+    enter = models.ForeignKey(Base, verbose_name='企业ID', on_delete=models.CASCADE)
     year = models.CharField('year', max_length=50, default='')
     # employees = models.CharField('从业人数',max_length=100, default='')
     total_assets = models.CharField('资产总额', max_length=100, default='')
