@@ -24,14 +24,14 @@ class EnterView(View):
             # or操作使用Q
             all_orgs = all_orgs.filter(Q(enterprise_id__icontains=search_keywords) | Q(type__icontains=search_keywords))
         # 行业筛选
-        industry_id = request.GET.get('industry','')
-        if industry_id:
-            all_orgs = all_orgs.filter(industry_id=int(industry_id))
+        reg = request.GET.get('cy','')
+        if reg:
+            all_orgs = all_orgs.filter(region=reg)
 
         # 类别筛选
         category = request.GET.get('ct','')
         if category:
-            all_orgs = all_orgs.filter(category=category)
+            all_orgs = all_orgs.filter(industry=category)
 
         # 按注册时间排名企业
         hot_orgs = all_orgs.order_by('-register')[:3]
@@ -59,7 +59,7 @@ class EnterView(View):
             "all_orgs": orgs,
             # "enter": enter,
             "org_nums": org_nums,
-            'industry':industry_id,
+            'reg':reg,
             "category": category,
             'hot_orgs':hot_orgs,
             'sort':sort,
@@ -74,14 +74,8 @@ class EnterHomeView(View):
         current_page = 'home'
         # 根据id找到课程机构
         course_org = Base.objects.get(id=int(enter_id))
-        course_org.click_nums += 1
-        course_org.save()
-        # 判断收藏状态
-        # has_fav = False
-        # if request.user.is_authenticated:
-        #     if UserFavorite.objects.filter(user=request.user, fav_id=course_org.id, fav_type=2):
-        #         has_fav = True
-        # 反向查询到课程机构的所有课程和老师
+        # course_org.click_nums += 1
+        # course_org.save()
         all_know = course_org.know_set.all()[:4]
         all_money = course_org.money_set.all()[:2]
         all_year = course_org.year_set.all()[:2]

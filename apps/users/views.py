@@ -55,7 +55,7 @@ class LoginView(View):
                 if user.is_active:
                     # 只有注册激活才能登录
                     login(request, user)
-                    return render(request, 'base.html')
+                    return render(request, 'index.html')
                 else:
                     return render(request, 'login.html', {'msg': '用户名或密码错误', 'login_form': login_form})
             # 只有当用户名或密码不存在时，才返回错误信息到前端

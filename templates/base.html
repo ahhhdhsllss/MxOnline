@@ -12,8 +12,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/login.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.min862f.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/font-awesome.min.css">
+{#    <link rel="stylesheet" type="text/css" href="/static/css/login.css">#}
     {% block custom_css %}
 
     {% endblock %}
@@ -23,10 +26,10 @@
 </head>
 <body>
 
-<section class="headerwrap ">
+<section class="headerwrap "style="height: 120px">
     <header>
-        <div class=" header">
-            <div class="top">
+        <div class=" header" style="height: 120px">
+            <div class="top"style="height: 50px">
                 <div class="wp">
 {#                    <div class="fl"><p>服务电话：<b>33333333</b></p></div>#}
 {#                    <div  class="fl"><p><a style="color: white;font-size: 18px;" href="http://www.cnblogs.com/derek1184405959/"><b>我的博客园地址</b></a></p></div>#}
@@ -62,42 +65,22 @@
                 </div>
             </div>
 
-{#            <div class="middle">#}
-{#                <div class="wp">#}
-{#                    <a href="/"><img class="fl" src="{% static 'images/logo.jpg' %}"/></a>#}
-{#                    <div class="searchbox fr">#}
-{#                        <div class="selectContainer fl">#}
-{#                            <span class="selectOption" id="jsSelectOption" data-value="course">#}
-{#                                公开课#}
-{#                            </span>#}
-{#                            <ul class="selectMenu" id="jsSelectMenu">#}
-{#                                <li data-value="course">公开课</li>#}
-{#                                <li data-value="org">课程机构</li>#}
-{#                                <li data-value="teacher">授课老师</li>#}
-{#                            </ul>#}
-{#                        </div>#}
-{#                        <input id="search_keywords" class="fl" type="text" value="" placeholder="请输入搜索内容"/>#}
-{#                        <img class="search_btn fr" id="jsSearchBtn" src="{% static 'images/search_btn.png' %}"/>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
 
-
-            <nav>
+            <nav style="height: 70px">
                 <div class="nav">
                     <div class="wp">
                         <ul>
                             <li {% if request.path == '/' %}class="active" {% endif %}><a
                                     href="{% url 'index' %}">首页</a></li>
-                            <li {% if request.path|slice:'7' == '/course' %}class="active"{% endif %}>
+{#                            <li {% if request.path|slice:'7' == '/course' %}class="active"{% endif %}>#}
 {#                                <a href="{% url 'course:course_list' %}">#}
 {#                                    公开课<img class="hot" src="{% static 'images/nav_hot.png' %}">#}
 {#                                </a>#}
-                            </li>
+{#                            </li>#}
 {#                            <li {% if request.path|slice:'12' == '/org/teacher' %}class="active"{% endif %}>#}
 {#                                <a href="{% url 'org:teacher_list' %}">授课教师</a>#}
 {#                            </li>#}
-                            <li {% if request.path|slice:'9' == '/enter/list' %}class="active" {% endif %}><a
+                            <li {% if request.path == '/enter' %}class="active" {% endif %}><a
                                     href="{% url 'enterprise:enter_list' %}">企业信息</a></li>
                         </ul>
                     </div>
@@ -108,43 +91,15 @@
     </header>
 </section>
 <!--crumbs start-->
-{##}
+
 {#面包屑#}
-{#{% block custom_bread %}#}
-{#{% endblock %}#}
+{% block custom_bread %}
+{% endblock %}
 
 {#正文#}
 
-
-<div class="login-box clearfix">
-            <div class="hd-login clearfix">
-                <h1>系统首页</h1>
-{#                <a class="index-font" href="index.html">回到首页</a>#}
-            </div>
-            <div class="fl slide">
-                <div class="imgslide">
-                    <ul class="imgs">
-                            <li><a href=""><img width="483" height="472" src="/static/images/mysql1.jpg" /></a></li>
-                            <li><a href=""><img width="483" height="472" src="/static/images/mysql2.jpg" /></a></li>
-                            <li><a href=""><img width="483" height="472" src="/static/images/mysql3.jpg" /></a></li>
-                    </ul>
-                </div>
-                <div class="unslider-arrow prev"></div>
-                <div class="unslider-arrow next"></div>
-            </div>
-            <div class="fl form-box" style="width: 2500px">
-                <h3>所谓僵尸企业是指缺乏盈利能力却能够以低于市场最优利率成本获得信贷资源，依靠外界输血而缺乏自生能力的企业。</h3>
-                <h3>僵尸企业是我国经济结构转型时期面临的一个棘手问题，既影响经济效率，也蕴含金融风险。</h3>
-                <h3>处理这一问题首先需要对僵尸企业进行识别和分类。</h3>
-                <h3>本系统通过对企业从业人数、成立年限、注册资本、营业收入、风险信息，</h3>
-                <h3>行政处罚、纳税信用等级、黑名单、上市信息、电商信息等数据关联处理，</h3>
-                <h3>按需进行权重分割，并对这些数据进行综合分析，</h3>
-                <h3>构建出企业全息画像，整体评估一个企业综合价值，更好的勾勒出企业的经营变化情况。</h3>
-            </div>
-</div>
-
-
-
+{% block content %}
+{% endblock %}
 
 <footer>
     <div class="footer">
