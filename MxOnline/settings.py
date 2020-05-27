@@ -19,7 +19,6 @@ sys.path.insert(0,os.path.join(BASE_DIR, 'extra_apps'))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -30,6 +29,7 @@ SECRET_KEY = '4kx_k$0^nsiot+ok!fl75^y4v0stbw8mim3#r4d%&nsh@&xi88'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 
 
 # Application definition
@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'organization',
     'operation',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'captcha'
 ]
 
 MIDDLEWARE = [
@@ -73,15 +74,22 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
         },
     },
 ]
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+
 
 
 WSGI_APPLICATION = 'MxOnline.wsgi.application'
@@ -95,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mxonline1',        #数据库名字
         'USER': 'root',          #账号
-        'PASSWORD': '123456',      #密码
+        'PASSWORD': 'mysql123',      #密码
         'HOST': '127.0.0.1',    #IP
         'PORT': '3306',                   #端口
     }
@@ -145,3 +153,12 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# settings.py
+
+EMAIL_HOST = "smtp.qq.com"  # SMTP服务器主机
+EMAIL_PORT = 25             # 端口
+EMAIL_HOST_USER = "1731485177@qq.com"       # 邮箱地址
+EMAIL_HOST_PASSWORD = "zltifqsizsifccgi"    # 密码
+EMAIL_USE_TLS= True
+EMAIL_FROM = "1731485177@qq.com"            # 邮箱地址
