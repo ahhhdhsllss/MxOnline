@@ -30,8 +30,8 @@ class Base(models.Model):
         verbose_name = '企业基本信息'
         verbose_name_plural = verbose_name
 
-    def __str__(self):
-        return self.enterprise_id
+    # def __str__(self):
+    #     return self.id
 
 
 

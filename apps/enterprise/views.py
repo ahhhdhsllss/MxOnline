@@ -52,7 +52,7 @@ class EnterView(View):
         except PageNotAnInteger:
             page = 1
         # 这里指从allorg中取五个出来，每页显示5个
-        p = Paginator(all_orgs, 5, request=request)
+        p = Paginator(all_orgs, 10, request=request)
         orgs = p.page(page)
 
         return render(request, "enter-list.html", {

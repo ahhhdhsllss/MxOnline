@@ -55,7 +55,7 @@ class LoginView(View):
                 if user.is_active:
                     # 只有注册激活才能登录
                     login(request, user)
-                    return render(request, 'usercenter-base.html')
+                    return render(request, 'base.html')
                 else:
                     return render(request, 'login.html', {'msg': '用户名或密码错误', 'login_form': login_form})
             # 只有当用户名或密码不存在时，才返回错误信息到前端
@@ -169,7 +169,7 @@ class LogoutView(View):
     def get(self,request):
         logout(request)
         from django.urls import reverse
-        return HttpResponseRedirect(reverse('index'))
+        return HttpResponseRedirect(reverse('login'))
 
 class UploadImageView(LoginRequiredMixin,View):
     '''用户图像修改'''

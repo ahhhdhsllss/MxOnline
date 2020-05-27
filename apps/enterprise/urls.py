@@ -25,7 +25,7 @@
 #     re_path('teacher/detail/(?P<teacher_id>\d+)/', TeacherDetailView.as_view(), name="teacher_detail"),
 #
 # ]
-
+import xadmin
 from django.urls import path,re_path
 
 from enterprise.views import EnterView
@@ -33,6 +33,7 @@ from enterprise.views import EnterView
 # 要写上app的名字
 app_name = "enterprise"
 urlpatterns = [
+    # path('list/', xadmin.site.urls),
     path('list/', EnterView.as_view(), name='enter_list'),
     re_path('home/(?P<enter_id>\d+)/', EnterView.as_view(), name="enter_home"),
 ]
