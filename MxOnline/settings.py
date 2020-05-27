@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'course',
     'organization',
     'operation',
+    'enterprise',
     'xadmin',
     'crispy_forms',
     'captcha'
@@ -103,7 +104,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mxonline1',        #数据库名字
         'USER': 'root',          #账号
-        'PASSWORD': 'mysql123',      #密码
+        'PASSWORD': '123456',      #密码
         'HOST': '127.0.0.1',    #IP
         'PORT': '3306',                   #端口
     }
@@ -116,6 +117,7 @@ AUTH_USER_MODEL = 'users.UserProfile'
 AUTH_COURSE_MODEL = 'course.UserProfile'
 AUTH_ORGANIZATION_MODEL = 'organization.UserProfile'
 AUTH_OPERATION_MODEL = 'operation.UserProfile'
+AUTH_ENTERPRISE_MODEL = 'enterprise.UserProfile'
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
