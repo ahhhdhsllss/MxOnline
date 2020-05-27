@@ -26,12 +26,18 @@
                             <div class="cont">
                                 <a href="?industry={{ industry }}"><span
                                         class="{% ifequal category '' %}active2{% endifequal %}">全部</span></a>
-                                <a href="?ct=pxjg&industry={{ industry }}"><span
-                                        class="{% ifequal category 'pxjg' %}active2{% endifequal %}">企业</span></a>
-                                <a href="?ct=gx&industry={{ industry }}"><span
-                                        class="{% ifequal category 'gx' %}active2{% endifequal %}">高校</span></a>
-                                <a href="?ct=gr&industry={{ industry }}"><span
-                                        class="{% ifequal category 'gr' %}active2{% endifequal %}">个人</span></a>
+                                <a href="?ct=商业服务业&industry={{ industry }}"><span
+                                        class="{% ifequal category '商业服务业' %}active2{% endifequal %}">商业服务业</span></a>
+                                <a href="?ct=交通运输业&industry={{ industry }}"><span
+                                        class="{% ifequal category '交通运输业' %}active2{% endifequal %}">交通运输业</span></a>
+                                <a href="?ct=工业&industry={{ industry }}"><span
+                                        class="{% ifequal category '工业' %}active2{% endifequal %}">工业</span></a>
+                                <a href="?ct=零售业&industry={{ industry }}"><span
+                                        class="{% ifequal category '零售业' %}active2{% endifequal %}">零售业</span></a>
+                                <a href="?ct=社区服务&industry={{ industry }}"><span
+                                        class="{% ifequal category '社区服务' %}active2{% endifequal %}">社区服务</span></a>
+                                <a href="?ct=服务业&industry={{ industry }}"><span
+                                        class="{% ifequal category '服务业' %}active2{% endifequal %}">服务业</span></a>
                             </div>
                         </li>
                         <li>
@@ -39,10 +45,10 @@
                             <div class="more">更多</div>
                             <div class="cont">
                                 <a href="?ct={{ category }}"><span
-                                        class="{% ifequal industry '' %}active2{% endifequal %}">全部</span></a>
-                                {% for enterprise_id in all_moneys %}
-                                    <a href="?enterprise_id={{ enterprise_id.id }}&ct={{ category }}"><span
-                                            class="{% ifequal industry enterprise_id.id|stringformat:"i" %}active2{% endifequal %}">{{ enterprise_id.industry }}</span></a>
+                                        class="{% ifequal category '' %}active2{% endifequal %}">全部</span></a>
+                                {% for region in all_city %}
+                                    <a href="?region={{ region.id }}&ct={{ category }}"><span
+                                            class="{% ifequal category region.id|stringformat:"i" %}active2{% endifequal %}">{{ enterprise_id.industry }}</span></a>
                                 {% endfor %}
                             </div>
                         </li>

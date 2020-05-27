@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from enterprise.models import Base, Money_report
+from enterprise.models import Base, RegionDict
 from django.db.models import Q
 
 class EnterView(View):
@@ -14,7 +14,7 @@ class EnterView(View):
         all_orgs = Base.objects.all()
 
         # 所有金融报表
-        all_moneys = Money_report.objects.all()
+        all_city = RegionDict.objects.all()
 
         # 机构搜索功能
         search_keywords = request.GET.get('keywords', '')
@@ -56,7 +56,7 @@ class EnterView(View):
 
         return render(request, "enter-list.html", {
             "all_orgs": orgs,
-            "all_citys": all_moneys,
+            "all_citys": all_city,
             "org_nums": org_nums,
             'industry':industry_id,
             "category": category,
