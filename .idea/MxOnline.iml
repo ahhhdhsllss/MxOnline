@@ -19,8 +19,9 @@
       <sourceFolder url="file://$MODULE_DIR$/apps/users" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/apps/utils" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/DjangoUeditor" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.8" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">

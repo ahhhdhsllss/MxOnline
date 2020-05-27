@@ -7,7 +7,7 @@ import xadmin
 from django.urls import path,include,re_path
 
 from django.views.generic import TemplateView
-from users.views import LoginView, RegisterView, ActiveUserView, ResetView, ModifyPwdView
+from users.views import LoginView, RegisterView, ActiveUserView, ResetView, ModifyPwdView, LogoutView
 from users.views import ForgetPwdView
 from enterprise.views import EnterView
 
@@ -15,7 +15,8 @@ from enterprise.views import EnterView
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
 #    path('chart/',views.chart),
-    path('', TemplateView.as_view(template_name='index.html'),name='index'),
+    path('', TemplateView.as_view(template_name='login.html'),name='login'),
+    path('index/',TemplateView.as_view(template_name='index.html'),name='index'),
     path('login/',LoginView.as_view(),name = 'login'),
     path('register/',RegisterView.as_view(),name = 'register'),
     path('captcha/',include('captcha.urls')),
@@ -24,7 +25,7 @@ urlpatterns = [
     re_path('reset/(?P<active_code>.*)/', ResetView.as_view(), name='reset_pwd'),
     path('modify_pwd/', ModifyPwdView.as_view(), name='modify_pwd'),
     path("users/", include('users.urls', namespace="users")),
-
+    path('logout/', LogoutView.as_view(), name="logout"),
     # 企业APP相关url配置
     path("enter/", include('enterprise.urls', namespace="enterprise")),
     path("org/", include('organization.urls', namespace="org")),

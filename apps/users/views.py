@@ -1,15 +1,21 @@
 # users/views.py
+import json
+
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import PageNotAnInteger, Paginator
+
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate, login, logout
 
 from django.contrib.auth.backends import ModelBackend
 
-
+from operation.models import UserCourse, UserFavorite, UserMessage
+from organization.models import CourseOrg
 from .models import UserProfile,EmailVerifyRecord
 from django.db.models import Q
 from django.views.generic.base import View
-from .forms import LoginForm, RegisterForm, ForgetPwdForm, ModifyPwdForm
+from .forms import LoginForm, RegisterForm, ForgetPwdForm, ModifyPwdForm, UploadImageForm, UserInfoForm
 from django.contrib.auth.hashers import make_password
 from utils.email_send import send_register_eamil
 
@@ -49,7 +55,7 @@ class LoginView(View):
                 if user.is_active:
                     # 只有注册激活才能登录
                     login(request, user)
-                    return render(request, 'index.html')
+                    return render(request, 'usercenter-base.html')
                 else:
                     return render(request, 'login.html', {'msg': '用户名或密码错误', 'login_form': login_form})
             # 只有当用户名或密码不存在时，才返回错误信息到前端
@@ -157,3 +163,92 @@ class UserinfoView(LoginRequiredMixin,View):
     '''用户个人信息'''
     def get(self,request):
         return render(request,'usercenter-info.html',{})
+
+class LogoutView(View):
+    '''用户登出'''
+    def get(self,request):
+        logout(request)
+        from django.urls import reverse
+        return HttpResponseRedirect(reverse('index'))
+
+class UploadImageView(LoginRequiredMixin,View):
+    '''用户图像修改'''
+    def post(self,request):
+        #上传的文件都在request.FILES里面获取，所以这里要多传一个这个参数
+        image_form = UploadImageForm(request.POST,request.FILES)
+        if image_form.is_valid():
+            image = image_form.cleaned_data['image']
+            request.user.image = image
+            request.user.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status":"fail"}', content_type='application/json')
+
+class UpdatePwdView(View):
+    """
+    个人中心修改用户密码
+    """
+    def post(self, request):
+        modify_form = ModifyPwdForm(request.POST)
+        if modify_form.is_valid():
+            pwd1 = request.POST.get("password1", "")
+            pwd2 = request.POST.get("password2", "")
+            if pwd1 != pwd2:
+                return HttpResponse('{"status":"fail","msg":"密码不一致"}',  content_type='application/json')
+            user = request.user
+            user.password = make_password(pwd2)
+            user.save()
+
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(modify_form.errors), content_type='application/json')
+
+
+class SendEmailCodeView(LoginRequiredMixin, View):
+    '''发送邮箱修改验证码'''
+    def get(self,request):
+        email = request.GET.get('email','')
+
+        if UserProfile.objects.filter(email=email):
+            return HttpResponse('{"email":"邮箱已存在"}', content_type='application/json')
+
+        send_register_eamil(email,'update_email')
+        return HttpResponse('{"status":"success"}', content_type='application/json')
+
+class UpdateEmailView(LoginRequiredMixin, View):
+    '''修改邮箱'''
+    def post(self, request):
+        email = request.POST.get("email", "")
+        code = request.POST.get("code", "")
+
+        existed_records = EmailVerifyRecord.objects.filter(email=email, code=code, send_type='update_email')
+        if existed_records:
+            user = request.user
+            user.email = email
+            user.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"email":"验证码无效"}', content_type='application/json')
+
+
+class UserinfoView(LoginRequiredMixin,View):
+    '''用户个人信息'''
+    def get(self,request):
+        return render(request,'usercenter-info.html')
+
+    def post(self, request):
+        user_info_form = UserInfoForm(request.POST, instance=request.user)
+        if user_info_form.is_valid():
+            user_info_form.save()
+            return HttpResponse('{"status":"success"}', content_type='application/json')
+        else:
+            return HttpResponse(json.dumps(user_info_form.errors), content_type='application/json')
+
+class MyCourseView(LoginRequiredMixin, View):
+    '''我的课程'''
+    def get(self, request):
+        user_courses = UserCourse.objects.filter(user=request.user)
+        return render(request, "usercenter-mycourse.html", {
+            "user_courses":user_courses,
+        })
+
