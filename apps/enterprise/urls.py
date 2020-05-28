@@ -28,12 +28,12 @@
 import xadmin
 from django.urls import path,re_path
 
-from enterprise.views import EnterView
+from enterprise.views import EnterView,EnterHomeView
 
 # 要写上app的名字
 app_name = "enterprise"
 urlpatterns = [
     # path('list/', xadmin.site.urls),
     path('list/', EnterView.as_view(), name='enter_list'),
-    re_path('home/(?P<enter_id>\d+)/', EnterView.as_view(), name="enter_home"),
+    re_path('home/(?P<enter_id>\d+)/', EnterHomeView.as_view(), name="enter_home"),
 ]

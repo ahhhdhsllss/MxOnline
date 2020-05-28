@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
-from enterprise.models import Base
+from enterprise.models import Base, Knowledge, Money_report, Year_report
 from django.db.models import Q
 
 
@@ -73,14 +73,17 @@ class EnterHomeView(View):
     def get(self, request, enter_id):
         current_page = 'home'
         # 根据id找到课程机构
-        course_org = Base.objects.get(id=int(enter_id))
+        enter_org = Base.objects.get(id=int(enter_id))
+        know_enter = Knowledge.objects.all()
+        mon_enter = Money_report.objects.all()
+        year_enter = Year_report.objects.all()
         # course_org.click_nums += 1
         # course_org.save()
-        all_know = course_org.know_set.all()[:4]
-        all_money = course_org.money_set.all()[:2]
-        all_year = course_org.year_set.all()[:2]
-        return render(request,'org-detail-homepage.html',{
-            'course_org':course_org,
+        all_know = know_enter.filter(enter_id=int(enter_id))
+        all_money = mon_enter.filter(enter_id=int(enter_id))
+        all_year = year_enter.filter(enter_id=int(enter_id))
+        return render(request,'enter-detail-homepage.html',{
+            'enter_org':enter_org,
             'all_know':all_know,
             'all_money':all_money,
             'current_page':current_page,
