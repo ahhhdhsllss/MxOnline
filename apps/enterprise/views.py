@@ -144,3 +144,15 @@ def echarts_type(request):
         "num": [i[1] for i in _x]
     }
     return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})
+
+
+def echarts_mape(request):
+    #取企业基本信息表，计算每个行业的总数，并从大到小排列
+    _x = Base.objects.values_list('region').annotate(Count('id')).order_by('-id__count')[:20]
+    print('x',_x)
+    #横坐标为行业名，纵坐标为数量
+    jsondata = {
+        "reg": [i[0] for i in _x],
+        "list": [i[1] for i in _x]
+    }
+    return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})

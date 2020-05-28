@@ -9,7 +9,7 @@ from django.urls import path,include,re_path
 from django.views.generic import TemplateView
 from users.views import LoginView, RegisterView, ActiveUserView, ResetView, ModifyPwdView, LogoutView
 from users.views import ForgetPwdView
-from enterprise.views import EnterView, echarts_data,echarts_page,echarts_type
+from enterprise.views import EnterView, echarts_data,echarts_page,echarts_type,echarts_mape
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
@@ -33,5 +33,6 @@ urlpatterns = [
     path('echarts/', TemplateView.as_view(template_name='echarts.html'), name='echarts-url'),
     path('api/echarts/', echarts_data, name='api-echarts'),
     path('api/type/', echarts_type, name='api-type'),
+    path('api/mape/', echarts_mape, name='api-mape'),
     path('api/ech/', echarts_page, name='api-ech')
 ]
