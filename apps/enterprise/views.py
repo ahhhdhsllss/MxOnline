@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views.generic import View
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from enterprise.models import Base, Knowledge, Money_report, Year_report
-from django.db.models import Q
+from django.db.models import Q,Count
 
 
 class EnterView(View):
@@ -90,3 +90,15 @@ class EnterHomeView(View):
             'current_page':current_page,
             'all_year':all_year,
         })
+
+#图表
+def echarts_data(request):
+    #取企业基本信息表，计算每个行业的总数，并从大到小排列
+    _x = Base.objects.values_list('industry').annotate(Count('id')).order_by('-id__count')[:20]
+    print('x',_x)
+    #横坐标为行业名，纵坐标为数量
+    jsondata = {
+        "key": [i[0] for i in _x],
+        "value": [i[1] for i in _x]
+    }
+    return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})

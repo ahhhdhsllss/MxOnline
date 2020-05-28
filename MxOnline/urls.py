@@ -9,8 +9,7 @@ from django.urls import path,include,re_path
 from django.views.generic import TemplateView
 from users.views import LoginView, RegisterView, ActiveUserView, ResetView, ModifyPwdView, LogoutView
 from users.views import ForgetPwdView
-from enterprise.views import EnterView
-
+from enterprise.views import EnterView, echarts_data
 
 urlpatterns = [
     path('xadmin/', xadmin.site.urls),
@@ -30,4 +29,7 @@ urlpatterns = [
     path("enter/", include('enterprise.urls', namespace="enterprise")),
     path("org/", include('organization.urls', namespace="org")),
     # path("enter_list/", include(EnterView.as_view(),name = 'enter_list')),
+  #图表，第一个前端，第二个后端
+    path('echarts/', TemplateView.as_view(template_name='echarts.html'), name='echarts-url'),
+    path('api/echarts/', echarts_data, name='api-echarts')
 ]
