@@ -432,7 +432,7 @@ caption {
 }
 
 .header .top .userdetail {
-    display: none;
+    display: flow;
     position: absolute;
     right: 0;
     top: 38px;

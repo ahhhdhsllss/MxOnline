@@ -146,9 +146,9 @@
                         {% for kn in all_know %}
                             <tr>
                                 <th>{{ kn.enter_id }}</th>
-                                <th>{{ kn.patent.patent_choices}}</th>
-                                <th>{{ kn.brand.brand_choices}}</th>
-                                <th>{{ kn.copyright.copyright_choices }}</th>
+                                <th>{{ kn.patent}}</th>
+                                <th>{{ kn.brand}}</th>
+                                <th>{{ kn.copyright}}</th>
             {#                        <th><a href="{% url 'enterprise:enter_home' all_orgs.id %}">查看详细</a></th>#}
                             </tr>
                         {% endfor %}

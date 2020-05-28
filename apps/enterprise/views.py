@@ -79,6 +79,7 @@ class EnterHomeView(View):
         year_enter = Year_report.objects.all()
         # course_org.click_nums += 1
         # course_org.save()
+
         all_know = know_enter.filter(enter_id=int(enter_id))
         all_money = mon_enter.filter(enter_id=int(enter_id))
         all_year = year_enter.filter(enter_id=int(enter_id))
