@@ -129,65 +129,37 @@
 
                 </div>
             </div>
-
-{#            <div class="right companyrank layout">#}
-{#                <div class="head">企业注册资产排名</div>#}
-{#                {% for curent_org in hot_orgs %}#}
-{#                    <dl class="des">#}
-{#                        <dt class="num fl">{{ foorloop.counter }}</dt>#}
-{#                        <dd>#}
-{#                            <a href="/company/2/"><h1>{{ curent_org.name }}</h1></a>#}
-{#                            <p>{{ curent_org.address }}</p>#}
-{#                        </dd>#}
-{#                    </dl>#}
-{#                {% endfor %}#}
-{#            </div>#}
+            <div class='right companyright'style="background: #dcdcdc;height: 70px">
+                <div class=" rightform"style="background: #dcdcdc;height: 70px">
+                    <div style="background: #dcdcdc;width:200px;height: 65px!important;">
+                        <ul style="width:200px;height: 60px!important;">
+                            <li class="active2" style="font-size: 25px"><a href="{% url 'echarts-url'  %}">批量企业行为画像</a></li>
+                        </ul>
+                     </div>
+                 </div>
+            </div>
         </div>
     </section>
 {% endblock %}
 
+
+<script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
+<script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js' %}"></script>
+<script src="{% static 'js/plugins/layer/layer.js' %}"></script>
+<script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
+
+<script type="text/javascript" src="{% static 'js/plugins/jquery.raty.js' %}"></script>
+<script src="{% static 'js/selectUi.js' %}" type='text/javascript'></script>
+<script type="text/javascript" src="{% static 'js/plugins/laydate/laydate.js' %}"></script>
+<script src="{% static 'js/plugins/layer/layer.js' %}"></script>
+<script src="{% static 'js/plugins/queryCity/js/public.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/unslider.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/plugins/jquery.scrollLoading.js' %}"  type="text/javascript"></script>
+<script src="{% static 'js/validateDialog.js' %}"  type="text/javascript"></script>
+<script src="{% static 'js/deco-common.js' %}"  type="text/javascript"></script>
+
+<script src="{% static 'js/plugins/jquery.upload.js' %}" type='text/javascript'></script>
+<script src="{% static 'js/validate.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/deco-user.js' %}"></script>
 {% block custom_js %}
-{#<script>#}
-{#    $(function () {#}
-{#        $('#jsStayBtn').on('click', function () {#}
-{#            $.ajax({#}
-{#                cache: false,#}
-{#                type: "POST",#}
-{#                url: "{% url "org:add_ask" %}",#}
-{#                data: $('#jsStayForm').serialize(),#}
-{#                async: true,#}
-{#                success: function (data) {#}
-{#                    if (data.status == 'success') {#}
-{#                        $('#jsStayForm')[0].reset();#}
-{#                        alert("提交成功")#}
-{#                    } else if (data.status == 'fail') {#}
-{#                        $('#jsCompanyTips').html(data.msg)#}
-{#                    }#}
-{#                },#}
-{#            });#}
-{#        });#}
-{#    })#}
-{#</script>#}
-{##}
-{#<script>#}
-{#    $(function () {#}
-{#        $('#jsStayBtn').on('click', function () {#}
-{#            $.ajax({#}
-{#                cache: false,#}
-{#                type: "POST",#}
-{#                url: "/org/add_ask/",#}
-{#                data: $('#jsStayForm').serialize(),#}
-{#                async: true,#}
-{#                success: function (data) {#}
-{#                    if (data.status == 'success') {#}
-{#                        $('#jsStayForm')[0].reset();#}
-{#                        alert("提交成功")#}
-{#                    } else if (data.status == 'fail') {#}
-{#                        $('#jsCompanyTips').html(data.msg)#}
-{#                    }#}
-{#                },#}
-{#            });#}
-{#        });#}
-{#    })#}
-{#</script>#}
 {% endblock %}

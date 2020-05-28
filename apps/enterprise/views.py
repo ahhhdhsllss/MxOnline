@@ -92,6 +92,23 @@ class EnterHomeView(View):
             'all_year':all_year,
         })
 
+
+class ChartsView(View):
+    '''企业画像分类'''
+
+    def get(self, request):
+        all_orgs = Base.objects.all()
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+        # 这里指从allorg中取五个出来，每页显示5个
+        p = Paginator(all_orgs, 10, request=request)
+        all_orgs = p.page(page)
+        return render(request,'echarts_page.html',{
+            "all_orgs": all_orgs,
+        })
+
 #图表
 def echarts_data(request):
     #取企业基本信息表，计算每个行业的总数，并从大到小排列
@@ -101,5 +118,29 @@ def echarts_data(request):
     jsondata = {
         "key": [i[0] for i in _x],
         "value": [i[1] for i in _x]
+    }
+    return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})
+
+
+def echarts_page(request):
+    #取企业基本信息表，计算每个行业的总数，并从大到小排列
+    _x = Base.objects.values_list('flag').annotate(Count('id')).order_by('-id__count')[:20]
+    print('x',_x)
+    #横坐标为行业名，纵坐标为数量
+    jsondata = {
+        "flag": [i[0] for i in _x],
+        "val": [i[1] for i in _x]
+    }
+    return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})
+
+
+def echarts_type(request):
+    #取企业基本信息表，计算每个行业的总数，并从大到小排列
+    _x = Base.objects.values_list('type').annotate(Count('id')).order_by('-id__count')[:20]
+    print('x',_x)
+    #横坐标为行业名，纵坐标为数量
+    jsondata = {
+        "type": [i[0] for i in _x],
+        "num": [i[1] for i in _x]
     }
     return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})
