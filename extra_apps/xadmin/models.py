@@ -4,6 +4,7 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
+from django.utils.encoding import smart_text
 from django.utils.translation import ugettext_lazy as _, ugettext
 from django.urls.base import reverse
 from django.core.serializers.json import DjangoJSONEncoder

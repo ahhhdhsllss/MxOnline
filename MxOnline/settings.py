@@ -99,14 +99,7 @@ WSGI_APPLICATION = 'MxOnline.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mxonline1',        #数据库名字
-        'USER': 'root',          #账号
-        'PASSWORD': '123456',      #密码
-        'HOST': '127.0.0.1',    #IP
-        'PORT': '3306',                   #端口
-    }
+        
 }
 
 
