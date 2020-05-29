@@ -32,7 +32,7 @@ from enterprise.views import EnterView, EnterHomeView, EnterHomeChartView, \
     Per_YearsChartView, PerYear_2015_ChartView, PerYear_2016_ChartView, PerYear_2017_ChartView
 
 # 要写上app的名字
-from xadmin.plugins.chart import ChartsView
+from enterprise.views import ChartsView
 
 app_name = "enterprise"
 urlpatterns = [

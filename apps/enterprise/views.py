@@ -108,6 +108,8 @@ class ChartsView(View):
             "all_orgs": all_orgs,
         })
 
+
+
 #图表
 def echarts_data(request):
     #取企业基本信息表，计算每个行业的总数，并从大到小排列
@@ -156,6 +158,8 @@ def echarts_mape(request):
     }
     return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})
 
+
+
 class EnterHomeChartView(View):
 
     def get(self,request, enter_id):
@@ -176,6 +180,7 @@ class Per_YearsChartView(View):
     def get(self, request, enter_id):
         year_enter = Year_report.objects.all()
         _x = year_enter.filter(enter_id=int(enter_id)).values_list()
+        print(_x)
         jsondata = {
 
               '资产总额': [_x[0][3], _x[1][3], _x[2][3]],

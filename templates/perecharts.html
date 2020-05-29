@@ -262,12 +262,13 @@
                 };// series中的每一项为一个item,所有的属性均可以在此处定义
                 var legends = [];// 准备存放图例数据
                 var Series = []; // 准备存放图表数据
-                var json = jsons.data;// 后台返回的json
-                for(var i=0;i < json.length;i++){
+                console.log(jsons)
+
+                for(var i=0;i < jsons.length;i++){
                     var it = new Item();
-                    it.name = json[i].name;// 先将每一项填充数据
-                    legends.push(json[i].name);// 将每一项的图例名称也放到图例的数组中
-                    it.data = json[i].data;
+                    it.name = jsons[i].name;// 先将每一项填充数据
+                    legends.push(jsons[i].name);// 将每一项的图例名称也放到图例的数组中
+                    it.data = jsons[i];
                     Series.push(it);// 将item放在series中
                 }
     option ={
@@ -309,7 +310,7 @@
         {
             name: '资产总额',
             type: 'line',
-            data: data[0],
+            data: jsons[0],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'},
@@ -325,7 +326,7 @@
          {
             name: '负债总额',
             type: 'line',
-            data: data[1],
+            data: jsons[1],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'},
@@ -341,7 +342,7 @@
          {
             name: '营业总收入',
             type: 'line',
-            data: data[2],
+            data: jsons[2],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'},
@@ -357,7 +358,7 @@
          {
             name: '主营业务收入',
             type: 'line',
-            data: data[3],
+            data: jsons[3],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'},
@@ -373,7 +374,7 @@
          {
             name:'利润总额',
             type: 'line',
-            data: data[4],
+            data: jsons[4],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'},
@@ -389,7 +390,7 @@
          {
             name: '净利润',
             type: 'line',
-            data:datap[5],
+            data:jsons[5],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'},
@@ -405,7 +406,7 @@
          {
             name: '纳税总额',
             type: 'line',
-            data: data[6],
+            data: jsons[6],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'},
@@ -422,7 +423,7 @@
         {
             name: '所有者权益合计',
             type: 'line',
-            data: data[7],
+            data: jsons[7],
             markPoint: {
                 data: [
                     {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
