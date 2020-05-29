@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+ <title>charts</title>
+  <!-- 引入 echarts.js -->
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/echarts.common.js"></script>
+  <script src="/static/js/echarts.common.min.js"></script>
+<h1>123</h1>
+</head>
+<body>
+  <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+  <div id="first" style="height:300px;"></div>
+  <div id="second" style="height:200px;"></div>
+  <div id="third" style="height:200px;"></div>
+   <script type="text/javascript">
+      //测试
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(document.getElementById('first'));
+    var myyears_Chart = echarts.init(document.getElementById('second'));
+    var myperyears_Chart = echarts.init(document.getElementById('third'));
+    $.ajax({
+            type:'get',
+            url:"./api/over_chart",
+            dataType:'json',
+            success:function(jsons){
+                var Item = function(){
+                    return {
+                        name:'',
+                        type:'line',
+                        // itemStyle: {normal: {areaStyle: {type: 'default'}}},这为线条设置
+                        label: {normal: {position: 'top'}},
+                        markLine: {data: [{type: 'average', name: '平均值'}]},
+                        data:[]
+                    }
+                };// series中的每一项为一个item,所有的属性均可以在此处定义
+                var legends = [];// 准备存放图例数据
+                var Series = []; // 准备存放图表数据
+                var json = jsons.data;// 后台返回的json
+                for(var i=0;i < json.length;i++){
+                    var it = new Item();
+                    it.name = json[i].name;// 先将每一项填充数据
+                    legends.push(json[i].name);// 将每一项的图例名称也放到图例的数组中
+                    it.data = json[i].data;
+                    Series.push(it);// 将item放在series中
+                }
+
+    //折线图
+    option ={
+    title:{
+        text: '企业三年年报数据折线图',
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data: ['从业人员', '资产总额','负债总额','营业总收入','主营业务收入','利润总额','净利润','纳税总额','所有者权益合计']
+    },
+    toolbox: {
+        show: true,
+        feature: {
+            dataZoom: {
+                yAxisIndex: 'none'
+            },
+            dataView: {readOnly: false},
+            magicType: {type: ['line', 'bar']},
+            restore: {},
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['2015', '2016', '2017']
+    },
+    yAxis: {
+        type: 'value',
+        axisLabel: {
+            formatter: '{value} °C'
+        }
+    },
+    series: [
+        {
+            name: '从业人员',
+            type: 'line',
+            data: x_data,
+        },
+        {
+            name: '资产总额',
+            type: 'line',
+            data: x_data,
+        },
+         {
+            name: '负债总额',
+            type: 'line',
+            data: x_data,
+        },
+         {
+            name: '营业总收入',
+            type: 'line',
+            data: x_data,
+        },
+         {
+            name: '主营业务收入',
+            type: 'line',
+            data: x_data,
+        },
+         {
+            name:'利润总额',
+            type: 'line',
+            data: x_data,
+        },
+         {
+            name: '净利润',
+            type: 'line',
+            data: x_data,
+        },
+         {
+            name: '纳税总额',
+            type: 'line',
+            data: x_data,
+
+        },
+
+        {
+            name: '所有者权益合计',
+            type: 'line',
+            data: y_data,
+            markPoint: {
+                data: [
+                    {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
+                ]
+            },
+
+        }
+    ]
+};
+
+
+                // option.series.data=jsons.
+                option.xAxis[0].data = jsons.xcontent;// 设置X轴数据了
+                // 折线图可设置上下两个X轴，必须是option.xAxis[0].data = json.xcontent
+                option.legend.data = legends;// 设置图例
+                option.series = Series; // 设置图表
+                myyears_Chart.setOption(option);// 重新加载图表
+            },
+            error:function(){
+                alert("数据加载失败！请检查数据链接是否正确");
+            }
+        });
+</script>
+</body>
+</html>
