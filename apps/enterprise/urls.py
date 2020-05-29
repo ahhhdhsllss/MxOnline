@@ -25,16 +25,42 @@
 #     re_path('teacher/detail/(?P<teacher_id>\d+)/', TeacherDetailView.as_view(), name="teacher_detail"),
 #
 # ]
+from django.views.generic import TemplateView
 import xadmin
 from django.urls import path,re_path
-
-from enterprise.views import EnterView,EnterHomeView,ChartsView
+from enterprise.views import EnterView, EnterHomeView, EnterHomeChartView, \
+    Per_YearsChartView, PerYear_2015_ChartView, PerYear_2016_ChartView, PerYear_2017_ChartView
 
 # 要写上app的名字
+from xadmin.plugins.chart import ChartsView
+
 app_name = "enterprise"
 urlpatterns = [
     # path('list/', xadmin.site.urls),
     path('list/', EnterView.as_view(), name='enter_list'),
+    re_path('home/(?P<enter_id>\d+)/info', EnterHomeView.as_view(), name="enter_home"),
+    #获取单个企业知识产权数据
+    re_path('home/(?P<enter_id>\d+)/perecharts', TemplateView.as_view(template_name='perecharts.html'), name='perecharts'),
+    re_path('home/(?P<enter_id>\d+)/api/perecharts',EnterHomeChartView.as_view(), name='perecharts-url'),
+
+    #单个企业三年年报数据(折线图)
+    re_path('home/(?P<enter_id>\d+)/api/per_years_charts_years',Per_YearsChartView.as_view(), name='perecharts-url_years'),
+
+    #单个企业2015年年报数据
+    re_path('home/(?P<enter_id>\d+)/api/per_ayear_2015_echarts',PerYear_2015_ChartView.as_view(), name='per_ayear_2015_echarts-url_peryear'),
+    # 单个企业2016年年报数据
+    re_path('home/(?P<enter_id>\d+)/api/per_ayear_2016_echarts', PerYear_2016_ChartView.as_view(),
+            name='per_ayear_2016_echarts-url_peryear'),
+    # 单个企业2017年报数据
+    re_path('home/(?P<enter_id>\d+)/api/per_ayear_2017_echarts', PerYear_2017_ChartView.as_view(),
+            name='per_ayear_2017_echarts-url_peryear'),
+
+
     path('charts/', ChartsView.as_view(), name='enter_charts'),
-    re_path('home/(?P<enter_id>\d+)/', EnterHomeView.as_view(), name="enter_home"),
+
+     #测试折线图，未实现
+    re_path('home/(?P<enter_id>\d+)/over_chart', TemplateView.as_view(template_name='over_chart.html'),
+         name='over_chart'),
+    re_path('home/(?P<enter_id>\d+)/api/over_chart',Per_YearsChartView.as_view(), name='over_chart-url_years'),
+
 ]

@@ -95,7 +95,6 @@ class EnterHomeView(View):
 
 class ChartsView(View):
     '''企业画像分类'''
-
     def get(self, request):
         all_orgs = Base.objects.all()
         try:
@@ -113,7 +112,7 @@ class ChartsView(View):
 def echarts_data(request):
     #取企业基本信息表，计算每个行业的总数，并从大到小排列
     _x = Base.objects.values_list('industry').annotate(Count('id')).order_by('-id__count')[:20]
-    print('x',_x)
+
     #横坐标为行业名，纵坐标为数量
     jsondata = {
         "key": [i[0] for i in _x],
@@ -125,7 +124,7 @@ def echarts_data(request):
 def echarts_page(request):
     #取企业基本信息表，计算每个行业的总数，并从大到小排列
     _x = Base.objects.values_list('flag').annotate(Count('id')).order_by('-id__count')[:20]
-    print('x',_x)
+
     #横坐标为行业名，纵坐标为数量
     jsondata = {
         "flag": [i[0] for i in _x],
@@ -137,7 +136,7 @@ def echarts_page(request):
 def echarts_type(request):
     #取企业基本信息表，计算每个行业的总数，并从大到小排列
     _x = Base.objects.values_list('type').annotate(Count('id')).order_by('-id__count')[:20]
-    print('x',_x)
+
     #横坐标为行业名，纵坐标为数量
     jsondata = {
         "type": [i[0] for i in _x],
@@ -149,10 +148,85 @@ def echarts_type(request):
 def echarts_mape(request):
     #取企业基本信息表，计算每个行业的总数，并从大到小排列
     _x = Base.objects.values_list('region').annotate(Count('id')).order_by('-id__count')[:20]
-    print('x',_x)
+
     #横坐标为行业名，纵坐标为数量
     jsondata = {
         "reg": [i[0] for i in _x],
         "list": [i[1] for i in _x]
     }
     return JsonResponse(jsondata,json_dumps_params={'ensure_ascii':False})
+
+class EnterHomeChartView(View):
+
+    def get(self,request, enter_id):
+      #知识产权柱状图
+       know_enter = Knowledge.objects.all()
+       _x = know_enter.filter(enter_id=int(enter_id)).values_list()
+
+       # 横坐标为行业名，纵坐标为数量
+       jsondata = {
+           "key":   ['专利','商标','著作权' ],
+           "value": [_x[0][2],_x[0][3],_x[0][4] ]
+        }
+       return JsonResponse(jsondata, json_dumps_params={'ensure_ascii': False})
+
+
+#单个用户三年内(折线图)
+class Per_YearsChartView(View):
+    def get(self, request, enter_id):
+        year_enter = Year_report.objects.all()
+        _x = year_enter.filter(enter_id=int(enter_id)).values_list()
+        jsondata = {
+
+              '资产总额': [_x[0][3], _x[1][3], _x[2][3]],
+              '负债总额' :[_x[0][4], _x[1][4], _x[2][4]],
+              '营业总收入':[_x[0][5], _x[1][5], _x[2][5]],
+              '主营业务收入':[_x[0][6], _x[1][6], _x[2][6]],
+              '利润总额':[_x[0][7], _x[1][7], _x[2][7]],
+              '净利润':[_x[0][8], _x[1][8], _x[2][8]],
+              '纳税总额':[_x[0][9], _x[1][9], _x[2][9]],
+              '所有者权益合计': [_x[0][10],_x[1][10],_x[2][10]],
+        }
+        print('jsondata',jsondata)
+        return JsonResponse(jsondata, json_dumps_params={'ensure_ascii': False})
+
+
+
+#单个企业2015年数据
+class PerYear_2015_ChartView(View):
+    def get(self,request, enter_id):
+       year_enter = Year_report.objects.all()
+       _x = year_enter.filter(enter_id=int(enter_id)).values_list()
+
+       # 横坐标为行业名，纵坐标为数量
+       jsondata = {
+           "key":    [ '资产总额','负债总额','营业总收入','主营业务收入','利润总额','净利润','纳税总额','所有者权益合计'],
+           "value": [_x[0][3],_x[0][4],_x[0][5],_x[0][6],_x[0][7],_x[0][8],_x[0][9],_x[0][10] ]
+        }
+       return JsonResponse(jsondata, json_dumps_params={'ensure_ascii': False})
+
+
+class PerYear_2016_ChartView(View):
+    def get(self,request, enter_id):
+       year_enter = Year_report.objects.all()
+       _x = year_enter.filter(enter_id=int(enter_id)).values_list()
+
+       # 横坐标为行业名，纵坐标为数量
+       jsondata = {
+           "key":    [ '资产总额','负债总额','营业总收入','主营业务收入','利润总额','净利润','纳税总额','所有者权益合计'],
+           "value": [_x[1][3],_x[1][4],_x[1][5],_x[1][6],_x[1][7],_x[1][8],_x[1][9],_x[1][10] ]
+        }
+       return JsonResponse(jsondata, json_dumps_params={'ensure_ascii': False})
+
+
+class PerYear_2017_ChartView(View):
+    def get(self,request, enter_id):
+       year_enter = Year_report.objects.all()
+       _x = year_enter.filter(enter_id=int(enter_id)).values_list()
+
+       # 横坐标为行业名，纵坐标为数量
+       jsondata = {
+           "key":    [ '资产总额','负债总额','营业总收入','主营业务收入','利润总额','净利润','纳税总额','所有者权益合计'],
+           "value": [_x[2][3],_x[2][4],_x[2][5],_x[2][6],_x[2][7],_x[2][8],_x[2][9],_x[2][10] ]
+        }
+       return JsonResponse(jsondata, json_dumps_params={'ensure_ascii': False})
